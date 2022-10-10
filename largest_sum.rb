@@ -49,8 +49,8 @@ class LargestSum
 
   def change_numbers_to_be_the_biggest_divisible_by_3
     arr = []
-    assign_changes_to_numbers.each do |key, value|
-      power = key.digits.count
+    assign_changes_to_numbers.each do |key, value| 
+      power = key.digits.count 
       arr << key + (value * (10**(power -1)))
     end
       arr
@@ -62,16 +62,14 @@ class LargestSum
 
   def number_of_remaining_changes
     changes = 6-(changes_needed_to_get_numbers_divisible_by_3).sum 
-      if (0...3) === changes
-        changes = 0
-      elsif
-        (3..5) === changes
-        changes = 3
-      else
-        changes == 6 
-        changes = 6
-      end
-       changes
+    if (0...3) === changes
+      changes = 0
+    elsif (3..5) === changes
+      changes = 3
+    else
+      changes = 6
+    end
+      changes
   end
 end
 
