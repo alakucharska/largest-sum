@@ -10,48 +10,39 @@ class LargestSum
     arr1 = []
     if number_of_remaining_changes == 3 || number_of_remaining_changes == 6
       hash = { numbers_divisible_by_3.max => number_of_remaining_changes }
-      hash.each do |k, v|
-        power = k.digits.count
-        b_num = k + (v*(10**(power-1)))
-        arr1 << b_num
+      hash.each do |biggest_number, remaining_changes|
+        arr1 << add_number_of_changes_to_the_number(biggest_number, remaining_changes)
       end
       i = numbers_divisible_by_3.index(numbers_divisible_by_3.max)
       numbers_divisible_by_3[i] = arr1[0]
-      numbers_divisible_by_3
+      p numbers_divisible_by_3
     else
-      numbers_divisible_by_3
+      p numbers_divisible_by_3
     end
   end
 
   private
-
-  def change_negative_numbers_into_positive
-    num.map! do |n|
-      n.abs
-    end
-    num
-  end
-
-  def positive_numbers
-    @positive_numbers ||= change_negative_numbers_into_positive
-  end
     
   def changes_needed_to_get_numbers_divisible_by_3
-    result = positive_numbers.map{|n| n%3} 
+    result = num.map{|n| n%3} 
     result.map do |dif| 
       dif != 0 ? 3-dif : 0
     end
   end
 
   def assign_changes_to_numbers
-    Hash[positive_numbers.zip(changes_needed_to_get_numbers_divisible_by_3)] 
+    Hash[num.zip(changes_needed_to_get_numbers_divisible_by_3)] 
+  end
+
+  def add_number_of_changes_to_the_number(number, changes)
+    power = number.abs.digits.count
+    number + (changes*(10**(power-1)))
   end
 
   def change_numbers_to_be_the_biggest_divisible_by_3
     arr = []
-    assign_changes_to_numbers.each do |key, value| 
-      power = key.digits.count 
-      arr << key + (value * (10**(power -1)))
+    assign_changes_to_numbers.each do |number, changes| 
+      arr << add_number_of_changes_to_the_number(number, changes)
     end
       arr
   end

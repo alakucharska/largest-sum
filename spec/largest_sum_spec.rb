@@ -26,9 +26,15 @@ RSpec.describe LargestSum do
     expect(LargestSum.new(num).biggest_number_after_changes).to eq([3,3,12])
   end
 
-  it "changes negative numbers to positive numbers" do
-    num = [-1, -3, -5]
+  it "accepts negative numbers" do
+    num = [-13, -14, -15]
 
-    expect(LargestSum.new(num).biggest_number_after_changes).to eq([3,3,9])
+    expect(LargestSum.new(num).biggest_number_after_changes).to eq([-3,9,-15])
+  end
+
+  it "accepts negative and positive numbers in one array" do
+    num = [-2006, 5, 99]
+
+    expect(LargestSum.new(num).biggest_number_after_changes).to eq([-6,6,129])
   end
 end
