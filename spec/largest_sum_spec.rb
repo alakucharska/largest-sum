@@ -50,7 +50,7 @@ RSpec.describe LargestSum do
     expect(LargestSum.new(num).biggest_number_after_changes).to eq([99, 99, 99])
   end
 
-  xit "returns the same number of elements as in the original array" do
+  it "returns the same number of elements as in the original array" do
     num = [3,3,6]
 
     expect(LargestSum.new(num).biggest_number_after_changes).to eq([3,3,12])

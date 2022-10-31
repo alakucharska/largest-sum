@@ -8,16 +8,12 @@ class LargestSum
 
   def biggest_number_after_changes
     return array_of_numbers if all_digits_9?
+    return array_of_numbers if array_of_numbers.size !=3
 
     final_result = []
     if number_of_remaining_changes == 3 || number_of_remaining_changes == 6
-      hash = { biggest_number_possible => number_of_remaining_changes } 
-      hash.each do |biggest_number, remaining_changes|
-        final_result << add_number_of_changes_to_the_number(biggest_number, remaining_changes)
-      end
-      index_of_the_number_to_be_replaced = numbers_divisible_by_3.index(biggest_number_possible)
-      numbers_divisible_by_3[index_of_the_number_to_be_replaced] = final_result[0]
-      numbers_divisible_by_3
+      final_result << add_number_of_changes_to_the_number(biggest_number_possible, number_of_remaining_changes)
+      replace_number_with_biggest_number_after_changes(final_result)
     else
       numbers_divisible_by_3 
     end
@@ -25,9 +21,15 @@ class LargestSum
 
   private
 
+  def replace_number_with_biggest_number_after_changes(final_result)
+    index_of_the_number_to_be_replaced = numbers_divisible_by_3.index(biggest_number_possible)
+    numbers_divisible_by_3[index_of_the_number_to_be_replaced] = final_result[0]
+    numbers_divisible_by_3
+  end
+
   def all_digits_9?
-    array_of_numbers.map do |number|
-      return false if number.abs.digits.any? { |value| value != 9 }
+    array_of_numbers.each do |number|
+      return false unless number.abs.digits.all? { |value| value == 9 }
     end
   end
     
@@ -39,7 +41,7 @@ class LargestSum
   end
 
   def assign_changes_to_numbers
-    Hash[ array_of_numbers.zip(changes_needed_to_get_numbers_divisible_by_3) ] 
+    array_of_numbers.zip(changes_needed_to_get_numbers_divisible_by_3)
   end
 
   def position_of_digit_to_change(number) 
